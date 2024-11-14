@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../store/store";
-import { login } from "../../store/Users/LoginUser";
+import { login, resetLoginState } from "../../store/Users/LoginUser";
 import { IUser } from "../../types/Types";
 import './Login.css';
 
@@ -31,14 +31,13 @@ const Login: FC = () => {
   };
 
   useEffect(() => {
-    if (status === "rejected" || error) {
-      navigate("/"); 
-    } else if (status === "fulfilled") {
+    if (status === "fulfilled") {
       const token = localStorage.getItem("token");
       if (token) {
         User?.area ? navigate("/defend"): navigate("/attack") ;
       } else {
         console.log("No token found");
+        dispatch(resetLoginState())
         navigate("/"); 
       }
     }

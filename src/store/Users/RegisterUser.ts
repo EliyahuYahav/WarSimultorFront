@@ -32,7 +32,12 @@ interface UserState {
 export const UserRegisterSlice = createSlice({
     name: "User Register",
     initialState,
-    reducers: {},
+    reducers: {
+      resetRegisterState: (state) => {
+        state.status = "idle"; 
+        state.error = null; 
+      },
+    },
     extraReducers(builder) {
       builder
         .addCase(register.pending, (state) => {
@@ -49,5 +54,5 @@ export const UserRegisterSlice = createSlice({
         })
     },
   });
-
+export const { resetRegisterState } = UserRegisterSlice.actions;
 export default UserRegisterSlice.reducer;

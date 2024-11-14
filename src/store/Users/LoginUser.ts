@@ -21,9 +21,12 @@ const initialState: IUserState = {
 export const login = createAsyncThunk("type/login", async (user: IUser) => {
   try {
     const response = await axios.post(BASE_URL_LOGIN, user);
-    const { token } = response.data;
-    if (token) {
+    const token = response.data.token;
+    const correctUser = response.data.user;
+    if (token && correctUser) {
+      localStorage.clear()
       localStorage.setItem("token", token);
+      localStorage.setItem("correctUser", JSON.stringify(correctUser));
     }
     return response.data;
   } catch (err) {
@@ -34,7 +37,12 @@ export const login = createAsyncThunk("type/login", async (user: IUser) => {
 export const UserLoginSlice = createSlice({
   name: "User Login",
   initialState,
-  reducers: {},
+  reducers: {
+    resetLoginState: (state) => {
+      state.status = "idle"; 
+      state.error = null; 
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(login.pending, (state) => {
@@ -45,8 +53,8 @@ export const UserLoginSlice = createSlice({
         if (action.payload) {
           state.User = action.payload.user;
           state.token = action.payload.token;
+          state.status = "fulfilled";
         }
-        state.status = "fulfilled";
       })
       .addCase(login.rejected, (state) => {
         state.error = "Cannot find user please singUp";
@@ -55,4 +63,5 @@ export const UserLoginSlice = createSlice({
   },
 });
 
+export const { resetLoginState } = UserLoginSlice.actions;
 export default UserLoginSlice.reducer;
