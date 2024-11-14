@@ -11,6 +11,19 @@ table, th {
     font-weight: 600;
 }
 
+.tr {
+    margin-top: 105px;
+    color: #2C3E50;
+    background-color: #ECF0F1; 
+    border: 1px solid #BDC3C7;
+    border-collapse: collapse;
+    text-align: center;
+    padding: 5px 90px;
+    width: 1000px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
 table, td {
     font-size: 0.9rem;
     color: #2C3E50;
@@ -21,7 +34,6 @@ table, td {
     width: 100%;
     text-align: center;
 }
-
 .td {
     font-size: 0.9rem;
     color: #2C3E50;
@@ -49,6 +61,7 @@ table, td {
 .Ammo{
     padding: 10px 200px;
     display: flex;
+    gap: 15px;
 }
 
 .missile-container {
@@ -56,7 +69,6 @@ table, td {
     padding: 10px 20px;
     background: #ffffff;
     border-radius: 12px;
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1); 
     text-align: center;
     transition: transform 0.2s ease-in-out; 
     justify-content: space-between;

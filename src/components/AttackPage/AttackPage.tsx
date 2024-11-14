@@ -11,6 +11,7 @@ import { GetOrganizations } from "../../store/AllResurces/GetOrganization";
 const AttackPage: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [List, setList] = useState<IMissile[]>()
+  const [location, setLocation] = useState<string>("")
 
   const { organizations, status, error } = useSelector(
     (state: RootState) => state.AllOrganizations
@@ -51,8 +52,20 @@ const AttackPage: FC = () => {
           <h1>Organization {organizations.name}</h1>
           <h2>Available Ammo</h2>
           <div className="Ammo">
+            
+          <select
+          name="location"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+        >
+          <option value="North">North</option>
+          <option value="South">South</option>
+          <option value="Center">Center</option>
+          <option value="West Bank">West Bank</option>
+        </select>
+
             {organizations.resources.map((res) => (
-              <MissileInStorage Missile={res} key={res._id} />
+              <MissileInStorage Missile={res} org={organizations.name} key={res._id} />
             ))}
           </div>
         </div>
@@ -71,7 +84,7 @@ const AttackPage: FC = () => {
           </thead>
           
           <tbody>
-        {List ? List.map((mis)=>{return <TableMissile Missile={mis} key={mis._id}/>}): <tr><td><h2>Loading...</h2></td></tr>}
+        {List ? List.map((mis)=>{return <TableMissile area={false} Missile={mis} key={mis._id}/>}): <tr><td><h2>Loading...</h2></td></tr>}
         </tbody>
       </table>
     </div>

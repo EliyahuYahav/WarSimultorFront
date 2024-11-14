@@ -29,6 +29,7 @@ const SingUp: FC = () => {
         password: password,
         organization: organization,
         area: location,
+        nameOrg: ""
       };
       dispatch(register(NewUser));
       setLocation("");

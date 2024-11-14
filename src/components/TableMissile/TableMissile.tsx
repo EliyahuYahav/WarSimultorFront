@@ -1,19 +1,22 @@
 import { FC } from "react";
 import "../MissileAmmo/Missile.css";
 import { IMissile } from "../../types/Types";
-
 interface TableProps {
   Missile: IMissile;
+  area: boolean| undefined
 }
 
-const TableMissile: FC<TableProps> = ({ Missile }) => {
+const TableMissile: FC<TableProps> = ({ Missile, area }) => {
+
+  
+
   return (
     <div>
       <tbody>
-        <tr>
-          <td>{Missile.name}</td>
+        <tr className="tr">
+          <td className="td">{Missile.name}</td>
           <td>{Missile.speed}</td>
-          <td>{Missile.status}</td>
+          <td>{Missile.status}{area ? '✖️' : ''}</td>
         </tr>
       </tbody>
     </div>

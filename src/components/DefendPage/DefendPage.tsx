@@ -11,6 +11,7 @@ import { GetMissile } from "../../store/AllResurces/GetMissiles";
 const DefendPage: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [List, setList] = useState<IMissile[]>()
+  const [user, setUser] = useState<IUser>()
 
   const { organizations, status, error } = useSelector(
     (state: RootState) => state.AllOrganizations
@@ -22,17 +23,26 @@ const DefendPage: FC = () => {
 
   const handleMissile = () =>{
     if (Missiles) {
-      const newList = Missiles.filter( (mis) => mis.status == "idle")
+      const newList = Missiles.filter( (mis) => mis.status != "idle")
       if (newList) {
         setList(newList)
       }
     }
   }
 
+  const handelIntercepts = ()=>{
+    if(user?.area){
+      if(user?.nameOrg.includes(user.area))
+        return true
+    }
+    return false
+  }
+
   useEffect(() => {
     const strUser = localStorage.getItem("correctUser");
     if (strUser) {
       const user: IUser = JSON.parse(strUser);
+      setUser(user)
       dispatch(GetOrganizations(user.nameOrg));
       dispatch(GetMissile())
       handleMissile()
@@ -51,7 +61,7 @@ const DefendPage: FC = () => {
           <h2>Available Ammo</h2>
           <div className="Ammo">
             {organizations.resources.map((res) => (
-              <MissileInStorage Missile={res} key={res._id} />
+              <MissileInStorage Missile={res} org={organizations.name} key={res._id} />
             ))}
           </div>
         </div>
@@ -69,7 +79,7 @@ const DefendPage: FC = () => {
         </thead>
           
         <tbody>
-          {List ? List.map((mis)=>{return <TableMissile Missile={mis} key={mis._id}/>}): <tr><td><h2>Loading...</h2></td></tr> }
+          {List ? List.map((mis)=>{return <TableMissile area={handelIntercepts()} Missile={mis} key={mis._id}/>}): <tr><td><h2>Loading...</h2></td></tr> }
         </tbody>
       </table>
     </div>
