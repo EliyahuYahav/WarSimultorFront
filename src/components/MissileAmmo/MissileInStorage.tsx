@@ -1,4 +1,4 @@
-import {FC} from 'react'
+import {FC, useEffect, useState} from 'react'
 import { IResources } from '../../types/Types'
 import { StartSocket } from '../../services/socketFront'
 
@@ -8,8 +8,13 @@ interface MissileProps{
 }
 
 const MissileInStorage:FC<MissileProps> = ({Missile, org}) => {
+  const [amount, setAmount] = useState<number| undefined>(Missile.amount)
 
-  const {StartAttack} = StartSocket()
+  const {StartAttack, amountFromServer} = StartSocket()
+  useEffect(() => {
+    setAmount(amountFromServer)
+    console.log(amount)
+  }, [])
 
   return (
     <div className='missile-container' onClick={()=>{StartAttack(Missile.name,  org)}}>
@@ -19,3 +24,6 @@ const MissileInStorage:FC<MissileProps> = ({Missile, org}) => {
 }
 
 export default MissileInStorage
+
+
+

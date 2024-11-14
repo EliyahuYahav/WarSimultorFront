@@ -13,8 +13,8 @@ const TableMissile: FC<TableProps> = ({ Missile, area }) => {
   return (
     <div>
       <tbody>
-        <tr className="tr">
-          <td className="td">{Missile.name}</td>
+        <tr>
+          <td>{Missile.name}</td>
           <td>{Missile.speed}</td>
           <td>{Missile.status}{area ? '✖️' : ''}</td>
         </tr>

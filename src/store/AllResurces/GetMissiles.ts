@@ -21,7 +21,6 @@ interface MissileState {
     async () => {
       try {
         const response = await axios.get(VITE_BASE_URL_MISSILE);
-        console.log(response.data)
         return response.data;
       } catch (err) {
         console.error(err)

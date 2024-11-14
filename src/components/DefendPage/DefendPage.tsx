@@ -23,7 +23,8 @@ const DefendPage: FC = () => {
 
   const handleMissile = () =>{
     if (Missiles) {
-      const newList = Missiles.filter( (mis) => mis.status != "idle")
+      const newList = Missiles.filter( (mis) => mis.status === "idle")
+      console.log(newList)
       if (newList) {
         setList(newList)
       }
@@ -37,6 +38,7 @@ const DefendPage: FC = () => {
     }
     return false
   }
+
 
   useEffect(() => {
     const strUser = localStorage.getItem("correctUser");
